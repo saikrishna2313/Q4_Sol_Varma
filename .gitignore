@@ -1,0 +1,7 @@
+prodcify/.anchor
+prodcify/.DS_Store
+prodcify/target/
+prodcify/**/*.rs.bk
+prodcify/node_modules/
+prodcify/test-ledger/
+prodcify/.yarn/
