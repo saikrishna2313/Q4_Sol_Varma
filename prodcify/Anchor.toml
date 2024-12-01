@@ -5,7 +5,7 @@ resolution = true
 skip-lint = false
 
 [programs.devnet]
-prodcify = "ESiApdjLUkyuGviqZk2DLaf9ew4GpbgpfDmZEGYrXJav"
+prodcify = ""
 
 [registry]
 url = "https://api.apr.dev"
