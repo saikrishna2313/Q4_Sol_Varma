@@ -4,12 +4,10 @@ pub mod states;
 pub use instructions::*;
 
 
-declare_id!("");
+declare_id!("ESiApdjLUkyuGviqZk2DLaf9ew4GpbgpfDmZEGYrXJav");
 
 #[program]
 pub mod prodcify {
-
-    use states::{Type};
 
     use super::*;
 

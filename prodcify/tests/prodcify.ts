@@ -98,7 +98,7 @@ describe("prodcify", () => {
     console.log("Team Member Account:", teamMemberAccount);
   });
 
-  it.only("Create Task!", async () => {
+  it("Create Task!", async () => {
     const user = provider.wallet;
     const projectName = "Prodcify";
     const taskName = "Task3";
@@ -146,10 +146,10 @@ describe("prodcify", () => {
 
   it("Create Sub Task!", async () => {
     const projectName = "Prodcify";
-  const taskName = "Task2";
-  const subtaskName = "Subtask3";
+  const taskName = "Task1";
+  const subtaskName = "Subtask4";
   const points =40;
-  const reward =1; 
+  const reward =4; 
   const user = provider.wallet;
   const mainTask=true;
   const [projectPda] = anchor.web3.PublicKey.findProgramAddressSync(
@@ -281,8 +281,8 @@ describe("prodcify", () => {
 
   it("Accept Subtask and Transfer Reward!", async () => {
     const projectName = "Prodcify";
-    const taskName = "Task2";
-    const subtaskName = "Subtask1";
+    const taskName = "Task1";
+  const subtaskName = "Subtask4";
     const user=provider.wallet;
 
     const [projectPda] = anchor.web3.PublicKey.findProgramAddressSync(
@@ -606,8 +606,8 @@ console.log("Pot Balance After:", potBalanceAfter/LAMPORTS_PER_SOL);
     
   });
   
-  it("Withdraw Funds", async () => {
-   
+  it.only("Withdraw Funds", async () => {
+    console.log("Releasing Earnings");
     const member=user1;
   
     const [profilePda] = anchor.web3.PublicKey.findProgramAddressSync(
@@ -621,6 +621,8 @@ console.log("Pot Balance After:", potBalanceAfter/LAMPORTS_PER_SOL);
     );
 
 const potBalanceBefore = await provider.connection.getBalance(potPda);
+console.log(potPda.toBase58())
+
 console.log("Pot Balance Before:", potBalanceBefore/LAMPORTS_PER_SOL);
 
     const tx = await program.methods
@@ -637,6 +639,7 @@ console.log("Pot Balance Before:", potBalanceBefore/LAMPORTS_PER_SOL);
 console.log("Transaction signature for Amount Withdrwan:", tx);
 const potBalanceAfter = await provider.connection.getBalance(potPda);
 console.log("Pot Balance After:", potBalanceAfter/LAMPORTS_PER_SOL);  
+console.log("Funds Recieved Successfully",await provider.connection.getBalance(member.publicKey)/LAMPORTS_PER_SOL);
     
   });
 });

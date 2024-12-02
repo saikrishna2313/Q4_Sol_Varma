@@ -114,6 +114,7 @@ impl<'info> AcceptTaskContext<'info> {
 
         task.status = Status::Completed;
         profile.points += task.points;
+        profile.tasks_completed+=1;
         self.team_member.completed_tasks+=1;
         Ok(())
     }

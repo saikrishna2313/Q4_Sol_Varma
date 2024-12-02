@@ -1,5 +1,5 @@
 use anchor_lang::{prelude::*, solana_program::clock};
-use crate::states::{TeamMember};
+use crate::states::{Profile, TeamMember};
 
 #[derive(Accounts)]
 #[instruction(name: String, project_name: String, member: Pubkey)]
@@ -14,6 +14,13 @@ pub struct CreateTeamMemberContext<'info> {
         bump
     )]
     pub team_member: Account<'info, TeamMember>,
+
+    #[account(
+        mut,
+        seeds = [b"profile", member.as_ref()],
+        bump=profile.bump
+    )]
+    pub profile: Account<'info, Profile>,
     pub system_program: Program<'info, System>,
 }
 
@@ -34,6 +41,7 @@ impl<'info> CreateTeamMemberContext<'info> {
         team_member.incompleted_tasks = 0;
         team_member.joining_date = clock::Clock::get()?.unix_timestamp as u64;
         team_member.bump = bumps.team_member;
+        self.profile.projects+=1;
 
         Ok(())
     }

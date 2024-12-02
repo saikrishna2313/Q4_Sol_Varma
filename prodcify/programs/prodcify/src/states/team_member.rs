@@ -13,13 +13,13 @@ pub struct TeamMember {
 }
 
 impl TeamMember {
-    pub const SPACE: usize = 8 + // Account discriminator (8 bytes)
-        4 + 35 + // Name: 4 bytes for length + 35 bytes for string data
-        4 + 32 + // Project: 4 bytes for length + 35 bytes for string data
-        32 + // Pubkey (id) (32 bytes)
-        8 + // Completed tasks count (8 bytes)
-        8 + // Pending tasks count (8 bytes)
-        8 + // Incompleted tasks count (8 bytes)
+    pub const SPACE: usize = 8 + 
+        4 + 35 + 
+        4 + 32 + 
+        32 + 
+        8 + 
+        8 + 
+        8 + 
         1 + // Bump (1 byte)
         8; // Joining date (8 bytes)
 }
