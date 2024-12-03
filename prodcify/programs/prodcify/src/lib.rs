@@ -4,7 +4,7 @@ pub mod states;
 pub use instructions::*;
 
 
-declare_id!("ESiApdjLUkyuGviqZk2DLaf9ew4GpbgpfDmZEGYrXJav");
+declare_id!("ESiApdjLUkyuGviqZk2DLaf9ew4GpbgpfDmZEGYrXJa");
 
 #[program]
 pub mod prodcify {
