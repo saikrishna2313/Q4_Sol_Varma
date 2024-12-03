@@ -1,7 +1,7 @@
 import * as anchor from "@coral-xyz/anchor";
 import { Program } from "@coral-xyz/anchor";
 import { Prodcify } from "../target/types/prodcify";
-import { Keypair, LAMPORTS_PER_SOL} from "@solana/web3.js";
+import { Keypair, LAMPORTS_PER_SOL, PublicKey} from "@solana/web3.js";
 import { keypairs } from "../keypairs";
 
 describe("prodcify", () => {
@@ -606,7 +606,7 @@ console.log("Pot Balance After:", potBalanceAfter/LAMPORTS_PER_SOL);
     
   });
   
-  it.only("Withdraw Funds", async () => {
+  it("Withdraw Funds", async () => {
     console.log("Releasing Earnings");
     const member=user1;
   
@@ -621,8 +621,6 @@ console.log("Pot Balance After:", potBalanceAfter/LAMPORTS_PER_SOL);
     );
 
 const potBalanceBefore = await provider.connection.getBalance(potPda);
-console.log(potPda.toBase58())
-
 console.log("Pot Balance Before:", potBalanceBefore/LAMPORTS_PER_SOL);
 
     const tx = await program.methods
@@ -635,11 +633,37 @@ console.log("Pot Balance Before:", potBalanceBefore/LAMPORTS_PER_SOL);
       }as any)
       .signers([member])
       .rpc();
-  
+
 console.log("Transaction signature for Amount Withdrwan:", tx);
 const potBalanceAfter = await provider.connection.getBalance(potPda);
 console.log("Pot Balance After:", potBalanceAfter/LAMPORTS_PER_SOL);  
 console.log("Funds Recieved Successfully",await provider.connection.getBalance(member.publicKey)/LAMPORTS_PER_SOL);
-    
   });
+
+ it("My Projects",async()=>{
+    const projects=await program.account.project.all();
+    console.log(projects.filter((project)=>project.account.owner.toBase58()===provider.wallet.publicKey.toBase58()));
+ })
+ it("My Tasks",async()=>{
+    const tasks=await program.account.task.all();
+    console.log(tasks.filter((task)=>(task.account.owner.toBase58()===provider.wallet.publicKey.toBase58()||task.account.member.toBase58()===provider.wallet.publicKey.toBase58())));
+ })
+ it.only("Profile",async()=>{
+  const who=user1;
+
+  const [profilePda] = anchor.web3.PublicKey.findProgramAddressSync(
+    [Buffer.from("profile"), who.publicKey.toBuffer()],
+    program.programId
+  );
+  const myProfile=await program.account.profile.fetch(profilePda);
+  console.log(myProfile);
+  const [potPda] = anchor.web3.PublicKey.findProgramAddressSync(
+    [Buffer.from("pot"),who.publicKey.toBuffer(),profilePda.toBuffer()],
+    program.programId
+  );
+  const Earnings=await provider.connection.getBalance(potPda);
+  console.log(`${Earnings/LAMPORTS_PER_SOL}, SOL`);
+ })
+
 });
+
