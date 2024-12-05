@@ -4,7 +4,7 @@ pub mod states;
 pub use instructions::*;
 
 
-declare_id!("ESiApdjLUkyuGviqZk2DLaf9ew4GpbgpfDmZEGYrXJa");
+declare_id!("BdHA5ALS9Em2AS6Qn11GcB9XREfmsEDeiJ6wrqNQ1rrU");
 
 #[program]
 pub mod prodcify {
@@ -80,6 +80,10 @@ pub mod prodcify {
     ) -> Result<()> {
         ctx.accounts.exit_task();
         Ok(())
+    }
+    pub fn delete_sub_task(ctx:Context<RemoveSubtaskContext>,name: String, member: Pubkey, project_name: String,task_name: String)->Result<()>{
+       ctx.accounts.delete_sub_task();
+       Ok(())
     }
     pub fn remove_task(
         ctx: Context<RemoveTaskContext>,

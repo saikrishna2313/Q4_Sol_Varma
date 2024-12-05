@@ -14,7 +14,7 @@ pub struct CreateTeamMemberContext<'info> {
         bump
     )]
     pub team_member: Account<'info, TeamMember>,
-
+     
     #[account(
         mut,
         seeds = [b"profile", member.as_ref()],

@@ -1,7 +1,7 @@
 import * as anchor from "@coral-xyz/anchor";
 import { Program } from "@coral-xyz/anchor";
 import { Prodcify } from "../target/types/prodcify";
-import { Keypair, LAMPORTS_PER_SOL, PublicKey} from "@solana/web3.js";
+import { Keypair, LAMPORTS_PER_SOL} from "@solana/web3.js";
 import { keypairs } from "../keypairs";
 
 describe("prodcify", () => {
@@ -13,7 +13,7 @@ describe("prodcify", () => {
   const user1 = Keypair.fromSecretKey(new Uint8Array(keypairs[0].privateKey));
   const user2 = Keypair.fromSecretKey(new Uint8Array(keypairs[1].privateKey));
     
-  it("Create Profile!", async () => {
+  it.only("Create Profile!", async () => {
     const user = user1;
 
     const [profilePda] = anchor.web3.PublicKey.findProgramAddressSync(
@@ -45,7 +45,7 @@ describe("prodcify", () => {
   it("Create Project!", async () => {
     const user = provider.wallet;
 
-    const projectName = "Prodcify";
+    const projectName = "Turbin";
 
     const [projectPda] = anchor.web3.PublicKey.findProgramAddressSync(
       [Buffer.from("project"), Buffer.from(projectName)],
@@ -69,11 +69,11 @@ describe("prodcify", () => {
 
   it("Create Team Member!", async () => {
     const user = provider.wallet;
-    const projectName = "Prodcify";
-    const teamMemberName = "Varma";
+    const projectName = "Turbin";
+    const teamMemberName = "Krishna";
 
-    const [projectPda] = anchor.web3.PublicKey.findProgramAddressSync(
-      [Buffer.from("project"), Buffer.from(projectName)],
+    const [profilePda] = anchor.web3.PublicKey.findProgramAddressSync(
+      [Buffer.from("profile"), user1.publicKey.toBuffer()],
       program.programId
     );
 
@@ -87,7 +87,7 @@ describe("prodcify", () => {
       .accounts({
         signer: user.publicKey,
         teamMember: teamMemberPda,
-        project: projectPda,
+        profile: profilePda,
         systemProgram: anchor.web3.SystemProgram.programId,
       } as any)
       .rpc();
@@ -100,8 +100,8 @@ describe("prodcify", () => {
 
   it("Create Task!", async () => {
     const user = provider.wallet;
-    const projectName = "Prodcify";
-    const taskName = "Task3";
+    const projectName = "Turbin";
+    const taskName = "Task1";
     const deadline = Math.floor(Date.now() / 1000) + 3600;
    console.log(deadline)
 
@@ -145,9 +145,9 @@ describe("prodcify", () => {
 
 
   it("Create Sub Task!", async () => {
-    const projectName = "Prodcify";
+    const projectName = "Turbin";
   const taskName = "Task1";
-  const subtaskName = "Subtask4";
+  const subtaskName = "Subtask1";
   const points =40;
   const reward =4; 
   const user = provider.wallet;
@@ -229,8 +229,8 @@ describe("prodcify", () => {
   });
   it("Enroll Task!", async () => {
     const member = user1; 
-    const projectName = "Prodcify";
-    const taskName = "Task2";
+    const projectName = "Turbin";
+    const taskName = "Task1";
     const user = provider.wallet;
   
   
@@ -280,9 +280,9 @@ describe("prodcify", () => {
   
 
   it("Accept Subtask and Transfer Reward!", async () => {
-    const projectName = "Prodcify";
+        const projectName = "Turbin";
     const taskName = "Task1";
-  const subtaskName = "Subtask4";
+  const subtaskName = "Subtask1";
     const user=provider.wallet;
 
     const [projectPda] = anchor.web3.PublicKey.findProgramAddressSync(
@@ -353,7 +353,7 @@ describe("prodcify", () => {
 
 
   it("Accept Task and Transfer Funds!", async () => {
-    const projectName = "Prodcify";
+    const projectName = "Turbin";
     const taskName = "Task1";
     const user=provider.wallet;
     const member=user1;
@@ -430,18 +430,18 @@ describe("prodcify", () => {
     const profilePotFinalBalance = await provider.connection.getBalance(potPda);
     const memberFinalBalance = await provider.connection.getBalance(member.publicKey);
   
-    console.log(`Final Vault A Balance: ${vaultAFinalBalance}`);
-    console.log(`Final Vault B Balance: ${vaultBFinalBalance}`);
-    console.log(`Final Profile Pot Balance: ${profilePotFinalBalance}`);
-    console.log(`Final Member Balance: ${memberFinalBalance}`);
+    console.log(`Final Vault A Balance: ${vaultAFinalBalance/LAMPORTS_PER_SOL}`);
+    console.log(`Final Vault B Balance: ${vaultBFinalBalance/LAMPORTS_PER_SOL}`);
+    console.log(`Final Profile Pot Balance: ${profilePotFinalBalance/LAMPORTS_PER_SOL}`);
+    console.log(`Final Member Balance: ${memberFinalBalance/LAMPORTS_PER_SOL}`);
 
   });
     
   it("Member Exit Task", async () => {
     const user = provider.wallet; 
     const member=user1;
-    const projectName = "Prodcify";
-    const taskName = "Task2";
+        const projectName = "Turbin";
+    const taskName = "Task1";
   
     const [projectPda] = anchor.web3.PublicKey.findProgramAddressSync(
       [Buffer.from("project"), Buffer.from(projectName)],
@@ -515,7 +515,6 @@ const vaultBBalanceAfter = await provider.connection.getBalance(vaultBPda);
 console.log("Vault B Balance After:", vaultBBalanceAfter/LAMPORTS_PER_SOL);
 
 const vaultABalanceAfter = await provider.connection.getBalance(vaultAPda);
-console.log("Vault A Balance After:", vaultABalanceAfter/LAMPORTS_PER_SOL);
 
 const potBalanceAfter = await provider.connection.getBalance(potPda);
 console.log("Pot Balance After:", potBalanceAfter/LAMPORTS_PER_SOL);  
@@ -525,8 +524,8 @@ console.log("Pot Balance After:", potBalanceAfter/LAMPORTS_PER_SOL);
 it("Delete  Task", async () => {
     const user = provider.wallet; 
     const member=user1;
-    const projectName = "Prodcify";
-    const taskName = "Task2";
+        const projectName = "Turbin";
+    const taskName = "Task1";
   
     const [projectPda] = anchor.web3.PublicKey.findProgramAddressSync(
       [Buffer.from("project"), Buffer.from(projectName)],
@@ -593,7 +592,7 @@ console.log("Pot Balance Before:", potBalanceBefore/LAMPORTS_PER_SOL);
       }as any)
       .rpc();
   
-    console.log("Transaction signature for Member Exit Task:", tx);
+    console.log("Transaction signature for Deleting Task:", tx);
   
 const vaultBBalanceAfter = await provider.connection.getBalance(vaultBPda);
 console.log("Vault B Balance After:", vaultBBalanceAfter/LAMPORTS_PER_SOL);
@@ -605,7 +604,51 @@ const potBalanceAfter = await provider.connection.getBalance(potPda);
 console.log("Pot Balance After:", potBalanceAfter/LAMPORTS_PER_SOL);  
     
   });
+
+  it("Delete Subtask", async () => {
+    const user = provider.wallet; 
+    const member=user1;
+        const projectName = "Turbin";
+    const taskName = "Task1";
+    const subtaskName="Subtask1";
   
+    const [taskPda] = anchor.web3.PublicKey.findProgramAddressSync(
+      [
+        
+        Buffer.from("task"),
+        Buffer.from(taskName),
+        user.publicKey.toBuffer(),
+        member.publicKey.toBuffer(),
+        Buffer.from(projectName),
+      ],
+      program.programId
+    );
+    const [subtaskPda] = anchor.web3.PublicKey.findProgramAddressSync(
+      [Buffer.from("subtask"), taskPda.toBuffer(), Buffer.from(subtaskName)],
+      program.programId
+    );
+  
+    const [vaultAPda] = anchor.web3.PublicKey.findProgramAddressSync(
+      [Buffer.from("vaultA"), taskPda.toBuffer()],
+      program.programId
+    );
+const vaultABalanceBefore = await provider.connection.getBalance(vaultAPda);
+console.log("Vault A Balance Before:", vaultABalanceBefore/LAMPORTS_PER_SOL);
+    const tx = await program.methods.deleteSubTask(taskName,member.publicKey, projectName,subtaskName)
+      .accounts({
+        signer: user.publicKey,
+        task: taskPda,
+        subtask:subtaskPda,
+        vaultA: vaultAPda,
+        systemProgram: anchor.web3.SystemProgram.programId,
+      }as any)
+      .rpc();
+console.log('Subtask deletion Success');
+console.log("Transaction signature for Member Exit Task:", tx);
+const vaultABalanceAfter = await provider.connection.getBalance(vaultAPda);
+console.log("Vault A Balance After:", vaultABalanceAfter/LAMPORTS_PER_SOL);
+  });
+
   it("Withdraw Funds", async () => {
     console.log("Releasing Earnings");
     const member=user1;
@@ -648,7 +691,7 @@ console.log("Funds Recieved Successfully",await provider.connection.getBalance(m
     const tasks=await program.account.task.all();
     console.log(tasks.filter((task)=>(task.account.owner.toBase58()===provider.wallet.publicKey.toBase58()||task.account.member.toBase58()===provider.wallet.publicKey.toBase58())));
  })
- it.only("Profile",async()=>{
+ it("Profile",async()=>{
   const who=user1;
 
   const [profilePda] = anchor.web3.PublicKey.findProgramAddressSync(

@@ -9,7 +9,7 @@ pub mod accept_task;
 pub mod remove_task;
 pub mod create_subtask;
 pub mod withdraw_funds;
-
+pub mod delete_subtask;
 
 
 
@@ -24,5 +24,6 @@ pub use accept_task::*;
 pub use remove_task::*;
 pub use create_subtask::*;
 pub use withdraw_funds::*;
+pub use delete_subtask::*;
 
 
