@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-=======
+
 # Prodcify
 
 Prodcify is a modern project management platform that integrates Web3 use cases to improve team collaboration, streamline task management, and ensure transparent payments and performance tracking. By combining traditional project management tools with the benefits of blockchain, Prodcify ensures seamless task allocation, timely payments, and a decentralized reputation system that fosters trust and accountability.
@@ -49,4 +48,3 @@ Prodcify is an app designed to modernize how teams collaborate and manage projec
 
 Prodcify redefines project management by combining traditional tools with the power of blockchain. It empowers teams to stay organized, collaborate efficiently, and get rewarded for their hard work—all while maintaining transparency, trust, and security. Whether you're a freelancer, part of a remote team, or running a startup, Prodcify makes managing projects easier and more rewarding than ever before.
 
->>>>>>> c84b6dc1c53c73061f4d7fbf47e555f630f0dc5a
